@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 
-{% include head.html %}
+   {% include head.html %}
 
-<body id="page-top">
-  {% include nav.html %}
-  {% include header.html %}
-  {% include call-to-action.html %}
-  <!-- {% include services.html %} -->
-  <!-- {% include portfolio.html %} -->
-  <!-- {% include aside.html %} -->
-  {% include contact.html %}
-  {% include scripts.html %}
-</body>
+   <body class="page header-ontop text-font-alt page-index-technology navbar-layout-default" data-colour-scheme="blue">
+      <!-- @plugin: page loading indicator, delete to remove loader -->
+      <div class="page-loader" data-toggle="page-loader"></div>
+
+      {% include nav.html %} 
+      {% include highlighted.html %} 
+      {% include content.html %} 
+      {% include footer.html %}
+      {% include scripts.html %}
+      
+   </body>
 
 </html>

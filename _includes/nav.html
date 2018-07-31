@@ -1,34 +1,63 @@
-<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand page-scroll" href="#page-top">Fractal Stack</a>
-        </div>
+<!-- ======== @Region: #header ======== -->
+<div id="header">
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a class="page-scroll" href="#about">About</a>
-                </li>
-                <!-- <li>
-                    <a class="page-scroll" href="#services">Services</a>
-                </li> -->
-                <!-- <li>
-                    <a class="page-scroll" href="#portfolio">Portfolio</a>
-                </li> -->
-                <li>
-                    <a class="page-scroll" href="#contact">Contact</a>
-                </li>
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container-fluid -->
-</nav>
+   <!--Header & Branding region-->
+   <div class="header py-2 border-light border-op-2 header-transparent header-dark">
+      <div class="header-inner container">
+         <!--branding/logo -->
+         <div class="header-brand">
+            <a class="header-brand-text" href="/" title="Home">
+               <h1 class="h3 text-white font-weight-normal">
+              Fractal Stack
+            </h1>
+            </a>
+            <div class="header-divider d-none d-md-inline-block header-divider-sm"></div>
+            <div class="header-slogan font-weight-bold text-letter-spacing text-uppercase">Technology</div>
+         </div>
+         <!-- other header content -->
+         <div class="header-block d-flex order-12 align-items-center">
+            <a href="#contact" data-toggle="scroll-link" data-scroll-link-nooffset=true data-active-class="text-primary"
+               class="nav-link text-capitalize"> Contact Us</a>
+         </div>
+
+         <div class="navbar">
+            <!--Fixed dots menu-->
+            <div class="navbar-main pos-fixed pos-zindex-fixed pos-t-10 pos-lg-vcenter pos-r py-2 px-3 bg-dark">
+               <a data-toggle="collapse" href="#navbar-collapse"> <i class="ion-android-menu text-white icon-1x"></i> </a>
+               <div class="collapse show" id="navbar-collapse">
+                  <!--main navigation-->
+                  <ul class="nav navbar-nav flex-column align-items-center">
+                     <li class="nav-item"></li>
+
+                     <li class="nav-item">
+                        <a href="#highlighted" data-toggle="scroll-link" data-dimiss="jpanel-menu" data-scroll-link-nooffset=true
+                           data-active-class="text-primary" class="nav-link text-capitalize"> <i class="fas fa-home" data-toggle="tooltip" title="Home" data-placement="left"></i>                           </a>
+                     </li>
+                     <li class="nav-item">
+                        <a href="#about" data-toggle="scroll-link" data-dimiss="jpanel-menu" data-scroll-link-nooffset=true data-active-class="text-primary"
+                           class="nav-link text-capitalize"> <i class="fas fa-info-circle" data-toggle="tooltip" title="About" data-placement="left"></i>                           </a>
+                     </li>
+                     <li class="nav-item">
+                        <a href="#services" data-toggle="scroll-link" data-dimiss="jpanel-menu" data-scroll-link-nooffset=true
+                           data-active-class="text-primary" class="nav-link text-capitalize"> 
+                           <i class="fas fa-cogs" data-toggle="tooltip" title="services" data-placement="left"></i>           
+                        </a>
+                     </li>
+                     <li class="nav-item">
+                        <a href="#projects" data-toggle="scroll-link" data-dimiss="jpanel-menu" data-scroll-link-nooffset=true
+                           data-active-class="text-primary" class="nav-link text-capitalize">
+                           <i class="fas fa-star" data-toggle="tooltip" title="projects" data-placement="left"></i>
+                        </a>
+                     </li>
+                     <li class="nav-item">
+                        <a href="#contact" data-toggle="scroll-link" data-dimiss="jpanel-menu" data-scroll-link-nooffset=true
+                           data-active-class="text-primary" class="nav-link text-capitalize"> <i class="fas fa-envelope" data-toggle="tooltip" title="Contact" data-placement="left"></i>                           </a>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+            <!--/.navbar-collapse -->
+         </div>
+      </div>
+   </div>
+</div>
