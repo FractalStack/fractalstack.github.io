@@ -1,5 +1,12 @@
 {
    "webcredentials": {
        "apps": [    "NZL683WDH7.com.fractalstack.UpBookProto1" ]
+    },
+    "applinks": {
+        "apps": [],
+        "details": [{
+            "appID": "NZL683WDH7.com.fractalstack.UpBookProto1",
+            "paths": ["/assets/img/index-technology/*"]
+            }]
     }
 }
