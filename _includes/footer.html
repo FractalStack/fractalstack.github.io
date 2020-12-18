@@ -12,31 +12,52 @@
       <div class="row justify-content-around mb-6">
          <div class="col-md-6 mb-1 footer-links">
 
-            <form id="contact-form" method="post">
+            <h2 id="success-msg" class="d-none text-center">Thank you for reaching out,  we'll be in touch soon!
+            </h2>
+
+            <form id="contact-form" method="post" class="needs-validation" novalidate>
                <div class="form-group">
                   <label for="name-input">Name</label>
-                  <input type="text" class="form-control" id="name-input" placeholder="Enter name">
+                  <input type="text" class="form-control" id="name-input" placeholder="Enter name"
+                     required>
+                  <div class="invalid-feedback text-warning">
+                     Please enter valid name
+                  </div>
                </div>
                <div class="form-group">
                   <label for="phone-input">Phone</label>
                   <input type="phone" class="form-control" id="phone-input" placeholder="Enter phone number">
+
                </div>
                <div class="form-group">
                   <label for="email-input">Email</label>
                   <input type="email" class="form-control" id="email-input" aria-describedby="emailHelp"
-                     placeholder="Enter email">
+                     placeholder="Enter email" required>
                   <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                  <div class="invalid-feedback text-warning">
+                     Please enter a valid email
+                  </div>
                </div>
                <div class="form-group">
                   <label for="description-input">How can we help you?</label>
-                  <textarea class="form-control" id="description-input" rows="3"></textarea>
+                  <textarea class="form-control" id="description-input" rows="3" required></textarea>
+                  <div class="invalid-feedback text-warning">
+                     Please provide a message
+                  </div>
                </div>
 
                <div class="form-group">
-                  <div class="g-recaptcha" data-sitekey="6LcctwsaAAAAADrdhmFg2eYDavgSq0Jc2pw9k2Bl"
+                  <div class="g-recaptcha" data-callback="verifyRecaptchaCallback" data-sitekey="6LcctwsaAAAAADrdhmFg2eYDavgSq0Jc2pw9k2Bl"
                      class="form-control" style="width:100%;"></div>
+                  <input class="form-control d-none" data-recaptcha="true" required>
+                  <div class="invalid-feedback text-warning">
+                     Please complete ReCaptcha
+                  </div>
                </div>
-               <button onClick="submitToAPI(event)" type="submit" class="btn btn-secondary">Submit</button>
+               <button type="submit" class="btn btn-secondary">Submit</button>
+               <h4 id="fail-msg" class="text-warning d-none">
+                  Something went wrong, please try again later.
+               </h4>
             </form>
 
          </div>

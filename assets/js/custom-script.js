@@ -66,30 +66,61 @@
    });
 })(jQuery);
 
-function submitToAPI(e) {
-   e.preventDefault();
-   var URL = "https://u7zqjrkm0e.execute-api.us-east-1.amazonaws.com/prod/submit";
+// handles form submission
+(function() {
+   'use strict';
+   window.addEventListener('load', function() {
+      var forms = document.getElementsByClassName('needs-validation');
+      var validation = Array.prototype.filter.call(forms, function(form) {
+         form.addEventListener('submit', function(event) {
+            if (validateForm()) { //form.checkValidity() === false || 
+               event.preventDefault();
+               event.stopPropagation();
+            } else {
+               submitToAPI(event);
+            }
+            form.classList.add('was-validated');
+         }, false);
+      });
+   }, false);
+})();
 
+// validates contact form
+function validateForm() {
    var Namere = /[A-Za-z]{1}[A-Za-z]/;
    if (!Namere.test($("#name-input").val())) {
-      alert("Name can not less than 2 char");
-      return;
+      return true;
    }
-   var mobilere = /[0-9]{10}/;
-   if (!mobilere.test($("#phone-input").val())) {
-      alert("Please enter valid mobile number");
-      return;
-   }
+
    if ($("#email-input").val() == "") {
-      alert("Please enter your email id");
-      return;
+      return true;
    }
 
    var reeamil = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,6})?$/;
    if (!reeamil.test($("#email-input").val())) {
-      alert("Please enter valid email address");
-      return;
+      $("#email-input").addClass('is-invalid');
+      return true;
    }
+
+   var Messagere = /[A-Za-z]{1}[A-Za-z]/;
+   if (!Messagere.test($("#description-input").val())) {
+      return true;
+   }
+
+   if (grecaptcha.getResponse() == "") {
+      return true;
+   }
+   return false;
+}
+
+// data-callback on form
+function verifyRecaptchaCallback(response) {
+   $('input[data-recaptcha]').val(response).trigger('change')
+}
+
+function submitToAPI(e) {
+   e.preventDefault();
+   var URL = "https://u7zqjrkm0e.execute-api.us-east-1.amazonaws.com/prod/submit";
 
    var name = $("#name-input").val();
    var phone = $("#phone-input").val();
@@ -99,7 +130,8 @@ function submitToAPI(e) {
       name: name,
       phone: phone,
       email: email,
-      desc: desc
+      desc: desc,
+      captcha: grecaptcha.getResponse()
    };
 
    $.ajax({
@@ -111,14 +143,11 @@ function submitToAPI(e) {
       data: JSON.stringify(data),
 
       success: function() {
-         // clear form and show a success message
-         alert("Successfull");
-         document.getElementById("contact-form").reset();
-         location.reload();
+         $("#contact-form").addClass('d-none');
+         $("#success-msg").removeClass('d-none');
       },
       error: function() {
-         // show an error message
-         alert("UnSuccessfull");
+         $("#fail-msg").removeClass('d-none');
       }
    });
 }
