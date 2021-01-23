@@ -1,0 +1,17 @@
+.hero-page {
+   height: 380px;
+}
+
+.contact-footer {
+   min-height: 500px;
+   position: relative;
+   bottom: 0;
+   width: 100%;
+}
+
+@media (min-width: 768px) {
+
+   .hero-page {
+      height: 200px;
+   }
+}

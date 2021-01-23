@@ -1,0 +1,204 @@
+---
+layout: dl-post
+title:  "Deploy Private Docker to Elastic Beanstalk"
+date:   2015-12-18 01:09:40 -0500
+categories: devlog Docker AWS ElasticBeanstalk
+author: BatteryAcidDev
+description:  Instructions for deploying a private Docker image to Elastic Beanstalk in AWS
+published: true
+---
+<div class="row">
+    <div class="col-sm-12">
+        <h3>Resources</h3>
+        <p>The following is a write up based on the AWS video while highlighting some of the not-so-obvious actions.
+            <br />
+            <a href="https://www.youtube.com/watch?v=pLw6MLqwmew">Check it out</a>
+        </p>
+        <p>Other Helpful Links:
+            <br />
+            <a href="http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_docker.html">AWS Guide</a>
+            <br />
+            <a href="http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/troubleshooting-docker.html#invalid-ec2-key-pair-in-dockerrun.aws.json">AWS Troubleshooting</a>
+        </p>
+        <h3>Assumptions</h3>
+        <p>
+            This post assumes you already have a dockerfile and have already pushed your build to dockerhub.  If you don't, there are plenty of test ones on the web that you can use.  This guide also assumes you have logged into docker from your development machine.
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <hr align="left">
+        <h2>Let's Get Started</h2>
+    </div>
+</div>
+
+<div class="row instruction-number">
+    <div class="col-sm-12">
+        <p>
+            <i class="fa fa-play"></i>
+            1. Login into docker from your dev machine.  You will need to copy part of the below config file so that the ELB environment can access your private dockerhub.
+        </p>
+        <div class="well">$ docker login<br />
+            $ cat ~/.docker/config.json
+        </div>
+        <blockquote>
+<pre class="prettyprint lang-javascript">
+{
+    "auths": {
+        "https://index.docker.io/v1/": {
+            "auth": "yourencodedkey==",
+            "email": "your@email.com"
+        }
+    }
+}
+</pre>      
+        </blockquote>
+        <div class="alert alert-danger" role="alert">
+            As of this writing, THIS CONFIG IS NOT COMPATIABLE WITH AWS<br />
+            They still want to see the old format so we will have to edit this configuration before it's ready.
+        </div>
+    </div>
+</div>
+
+<div class="row instruction-number">
+    <div class="col-sm-12">
+        
+        <p>
+            <i class="fa fa-play"></i>
+            2. Create a new .dockercfg file somewhere
+        </p>
+        <div class="well">
+            $ touch .dockercfg <br />
+            $ vim .dockercfg
+        </div>
+        <p>
+            From the config.json, Copy/paste the object inside "auths", like so:
+        </p>
+        <blockquote>
+<pre class="prettyprint lang-javascript">
+{
+    "https://index.docker.io/v1/": {
+      "auth": "<yourencodedkey==>",
+      "email": "your@email.com"
+    }
+}
+</pre>
+        </blockquote>
+    </div>
+</div>
+
+<div class="row instruction-number">
+    <div class="col-sm-12">
+        <p>
+            <i class="fa fa-play"></i>
+            3. Add this to an S3 bucket IN THE SAME REGION as where your Elastic Beanstaulk environment lives.  For this I used amazons web console.
+        </p>
+        <p>
+            <ul>
+                <li>Create a new Bucket</li>
+                <li>Inside that bucket, add a new folder and drop in the config, see below:</li>
+            </ul>
+            
+        </p>
+        <blockquote>
+            MyBucket/MyNewS3Folder/.dockercfg
+        </blockquote>
+        <p>
+            Remember to encrypt this after it's been uploaded: Select the file -> Properties -> Select the Server Side Encryption
+        </p>
+    </div>
+</div>
+
+<div class="row instruction-number">
+    <div class="col-sm-12">
+        <p>
+            <i class="fa fa-play"></i>
+            4. Create a Dockerrun.aws.json file locally and paste in your details. 
+        </p>
+        <blockquote>
+<pre class="prettyprint lang-javascript">
+{
+    "AWSEBDockerrunVersion": "1",
+    "Image": {
+        "Name": "yournamespace/docker-project",
+        "Update": "true"
+    },
+    "Authentication": {
+        "Bucket": "MyBucket",
+        "Key": "MyNewS3Folder/.dockercfg"
+    },
+    "Ports": [{
+        "ContainerPort": "8888"
+    }]
+}
+</pre>
+        </blockquote>
+        <p>
+            <ul>
+                <li>Note: the AWSEBDockerrunVersion has to be set to "1" unless you specify a multi-docker deployment</li>
+                <li>The details in Image refer to your dockerhub account</li>
+                <li>Authentication points to your uploaded .dockercfg file in S3</li>
+                <li>The Port is the port your docker container runs on, NOT the port that will be public facing.</li>
+            </ul>
+        </p>
+    </div>
+</div>
+
+<div class="row instruction-number">
+    <div class="col-sm-12">
+        <p>
+            <i class="fa fa-play"></i>
+            5. Back in the AWS Console we need to create an Instance Profile role.
+        </p>
+        <p>
+            <ul>
+                <li>Select Create an IAM role: "s3-get-elb-instance-profile-role"</li>
+                <li>Hit Select next to AWS Service Roles -> Amazon EC2 <br />
+                Here things get a little fuzzy, AWS has instructions to select a policy generator, but I don't think it is available at this point.  So we'll get to that it a bit.</li>
+                <li>Select nothing from the Attachy Policy Screen, hit next.</li>
+                <li>Hit Create Role</li>
+                <li>Back in the Roles screen, select the new policy and under Inline Policies hit "click here" to create one.</li>
+                <li>Select Policy Generator</li>
+                <li>Select and enter the following: <br />
+                    <img src="{{'/assets/img/step5.jpg' | absolute_url }}" class="img-responsive img-thumbnail" alt="instance-profile-role-edit">
+                    <blockquote>
+                        AWS Service: Amazon S3<br />
+                        Actions: getObject<br />
+                        ARN: arn:aws:s3:::MyBucket/MyNewS3Folder/.dockercfg<br />
+                    </blockquote>
+                </li>
+                <li>Hit Add Statement</li>
+                <li>Next Step, and Finish</li>
+            </ul>
+        </p>
+    </div>
+</div>
+
+<div class="row instruction-number">
+    <div class="col-sm-12">
+        <p>
+            <i class="fa fa-play"></i>
+            6. Create your Elastic Beanstalk Environment
+        </p>
+        <p>
+            <ul>
+                <li>In the AWS Console create new Elastic Beanstalk Environment</li>
+                <li>Under source select "Upload your own" and give it the Dockerrun.aws.json file your created:<br />
+                    <img src="{{'/assets/img/step6.jpg' | absolute_url }}" class="img-responsive img-thumbnail" alt="s3-application-source">
+                </li>
+                <li>After that just hit next until you get to Configuration Details.</li>
+                <li>On the configuration details it has t1.micro selected.  I bumped mine to t2.micro because I had memory issues while trying to run a using a Play Framework app.  Your app may be very small so you can probably leave it alone, up to you.</li>
+                <li>Hit Next until you get to Permissions:<br />
+                    <span class="text-danger"> Important:  select the role you created above for the Instance Profile</span>
+                </li>
+                <li>For the service role, select create new role.  It will pop open a new window where you give it a name and and hit Allow.</li>
+                <li>Hit next, then Launch</li>
+            </ul>
+        </p>
+        <p>Now after a few minutes of setup your app will be ready.</p>
+        <p>Refresh the logs while it's creating if you want to watch for errors.  If you encounter one, go to the Logs menu and request logs to debug.</p>
+    </div>
+</div>
+<hr align="left">   

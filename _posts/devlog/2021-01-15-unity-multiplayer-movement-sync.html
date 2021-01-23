@@ -1,0 +1,52 @@
+---
+layout: dl-post-video
+title: "Unity Multiplayer Movement synchronization"
+date: 2021-01-15 00:08:00 -0500
+categories: devlog AWS Unity Multiplayer
+author: BatteryAcidDev
+description: A walkthrough that shows how to make your own multiplayer game with player movement synchronization across clients.  
+---
+<div class="container">
+   <div class="row">
+      <div class="col-12">
+         <div class="media-body">
+            <div class="">
+               <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/cMGLFkG1iDg"
+                  frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen></iframe>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-12">
+         <h2 class="mt-5">Description</h2>
+         <p>A walkthrough that shows how to make your own multiplayer game with player movement
+            synchronization across clients.
+            Uses AWS API Gateway, Lambda, & DynamoDb, and Unity as a game client. I wanted to do
+            this without using GameLift as it is a much cheaper option, if the functionality works
+            for your project.
+         </p>
+         <p>Player movements will be sent to the server which in turn broadcasts those movements to
+            the other player-clients, rendering the opponent’s movement.
+            This is a home grown solution using WebSockets to communicate between the Unity clients
+            and AWS API Gateway/Lambda.
+         </p>
+         <p>Please note that this is NOT a production-ready implementation, but if you’re an indie
+            dev that just wants to get something up and running without having to worry about high
+            costs, then this may be a good starting point. This was designed to be for realtime
+            movements but it can also be refactored to use in a turn based game.
+         </p>
+         <p>Repositories for this project<br />
+            [AWS stuff] <a href="https://github.com/BatteryAcid/multiplayer-movement-sync-aws"
+               target="_blank">https://github.com/BatteryAcid/multiplayer-movement-sync-aws</a><br />
+            [Unity project] <a href="https://github.com/BatteryAcid/multiplayer-movement-sync-unity"
+               target="_blank">https://github.com/BatteryAcid/multiplayer-movement-sync-unity</a>
+         </p>
+         <p>How to setup API Gateway & Lambda tutorial<br />
+            [Unity Multiplayer Server with Amazon Web Services] <a href="https://youtu.be/X45VYma6738Ï"
+               target="_blank">https://youtu.be/X45VYma6738Ï</a>
+         </p>
+      </div>
+   </div>
+</div>

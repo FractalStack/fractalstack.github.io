@@ -1,0 +1,65 @@
+---
+layout: dl-post
+title: "The hidden tool for developing with DynamoDB"
+date: 2017-04-08 01:09:40 -0500
+categories: devlog DynamoDB AWS Tools
+author: BatteryAcidDev
+description: The javascript web shell tool for developing with DynamoDB
+published: true
+---
+<div class="row">
+   <div class="col-sm-12">
+      <h3>Resources</h3>
+      <p>AWS JavaScript and DynamoDB Docs:<br />
+         <a href="http://docs.aws.amazon.com/amazondynamodb/latest/gettingstartedguide/GettingStarted.JavaScript.html">Check
+            it out</a>
+      </p>
+   </div>
+</div>
+
+<div class="row">
+   <div class="col-sm-12">
+      <hr align="left">
+      <h2>DynamoDB Javascript Web-based Shell</h2>
+   </div>
+</div>
+
+<div class="row instruction-number">
+   <div class="col-sm-12">
+      <p>
+         <i class="fa fa-play"></i>
+         After about a year of working on and off with DynamoDB, the team had been limping along
+         with the Eclipse plugin, which helps, but is missing quite a few features. I was looking
+         for an easy way to create Local Secondary Index and I stumbled upon the (not so) hidden
+         javascript web shell, which solved my problem.
+      </p>
+      <p>
+         If you're already running DynamoDB from command line, you can attach the javascript web
+         shell to to the existing instance by simply pulling up the url of the tool:
+      </p>
+      <div class="well">
+         http://localhost:your-dynamodb-port/shell/
+      </div>
+   </div>
+</div>
+
+<div class="row instruction-number">
+   <div class="col-sm-12">
+      <p>
+         <i class="fa fa-play"></i>
+         And thats it! Have a look:
+      </p>
+      <p>
+         List of pre-baked API templates you can take advantage of:
+      </p>
+      <img src="{{'/assets/img/api-templates.png' | absolute_url }}" class="img-responsive img-thumbnail"
+         alt="api-templates">
+      <p>
+         Example Create Table API
+      </p>
+      <img src="{{'/assets/img/create-table-template.png' | absolute_url }}" class="img-responsive img-thumbnail"
+         alt="create-table-templates">
+   </div>
+</div>
+
+<hr align="left">

@@ -1,0 +1,162 @@
+---
+layout: dl-post
+title:  "Learning Locker, Moodle, with xAPI/Tincan"
+date:   2016-01-10 01:00:00 -0500
+categories: devlog LearningLocker Moodle xAPI tincan
+author: Bruce Shaw
+description: How to get Moodle to report to Learning Locker with xAPI using Tin Can Launch!
+published: false
+---
+
+<p>Building... Check back in a couple weeks</p>
+
+Learning Locker
+
+Note: not addressing production issues, this is a evalutation/development guide
+
+For this you'll need:
+- some time, like an hour or so
+- a Moodle course you can test with - I used Adobe Captivate to publish a Moodle compatible course.  I believe there also a few sample courses floating around on the internet.  This is the zip file that you will be uploading to Moodle.
+
+- how to get
+LL is built with Laravel: http://laravel.com/
+http://docs.learninglocker.net/installation/
+
+Requires:
+- composer https://getcomposer.org/
+- php, on OSX I recommend using homebrew: http://brew.sh/
+
+- make sure your brew is up to date
+
+> brew update
+
+> brew install php56
+
+> brew install php56-mcrypt  // you will also need the mcrypt extension
+
+// the php mongo extension will also be needed (installed below)
+
+// here are a couple tips if you run into trouble
+- having multiple versions of php on your system can get hairy, if you need to add the mcrypt.so extension manually (like if you don't use homebrew), make sure you add it to the correct php.ini file. 
+//lists your ini files
+> php --ini
+
+
+Mongo
+Again, I recommend using homebrew: http://brew.sh/
+https://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/
+> brew install mongodb
+
+//install the php mongo extension
+> brew tap homebrew/php
+> brew install php56-mongo
+
+Mongo needs a database directory, the default is /data/db
+- to specifiy your own
+> mkdir -p /your/own/path
+- make sure the user account running mongod has read and write permissions for that directory
+- run mongo, assumes mongod is in your PATH
+> mongod
+- or with your custom db path
+> mongod --dbpath <path to data directory>
+
+
+// Once you have made it through the gauntlet of prerequisites, head back over to the offical installation instructions
+http://docs.learninglocker.net/installation/
+and perform the Download and install instructions.
+
+Once that is complete, configure Learning Locker to point to your mongoDb:
+- Learning Locker is built using Laravel.  Copy the app/config/database.php file and move it to a new directory:
+app/config/local/
+- This will overwrite the app/config/database.php config and is good practice for running locally.
+
+//once complete run 
+php artisan migrate
+
+- If you used Homebrew to install everything, you should be good to go. 
+- If you see a error like "Mcrypt PHP extension required.", check the php.ini file for the extension.
+> php --ini
+> vim <path/to/php>.ini
+//look for mcrypt.so
+
+- how to configure
+//generate key
+> php artisan key:generate
+- replace the key in app.php 
+
+- I skipped setting up the email configs
+
+- Run it
+//you could do 
+php artisan serve
+//but I recommend setting up the project to use the default apache installed on OSX
+// You have to point the webservers Documents directory to Learning Lockers public directory 
+> sudo mv Documents Documents_bak //backup existing Documents
+> sudo ln -s /Your/Path/to/learningLockers/public Documents
+//go to localhost in browser and you should now see Learning Lockers login screen
+
+- Follow Learning lockers setup for creating the first admin user
+- Once we've completed the setup of the TinCanLaunch Plugin below, we'll setup our first client
+
+------
+Moodle
+I used the pre-packaged Moodle install, so it went pretty smoothly for me:
+https://download.moodle.org/macosx/
+Once you've downloaded the package, run it like you would install any other mac installer.
+https://docs.moodle.org/30/en/Installation_Package_for_OS_X
+Note: it does install a flavor MAMP.
+//Hit your browser: http://localhost:8888/moodle/
+//login with admin/12345
+
+------
+TinCanLaunch Plugin for xAPI
+
+//Download
+https://moodle.org/plugins/mod_tincanlaunch
+//github home:
+https://github.com/garemoko/moodle-mod_tincanlaunch
+
+Warning: when you download from the link above, check if the TinCanPhp folder is empty.  If so, correct with the following:
+//Unzip the downloaded moodle-mod_tincanlaunch folder
+> cd /path/to/tincanlanuch/folder
+> rm -r TinCanPhp
+> git clone https://github.com/RusticiSoftware/TinCanPHP.git
+//This will successfully populate the folder - see mod_tincanlaunch github home for more details
+
+Note: At the time of this writting, the admin interface for uploading this mod was broken, so we have to manually copy the mod folder over to the mod directory.
+//some offical docs for installing plugins: https://docs.moodle.org/23/en/Installing_plugins
+- The mod directory should be at /Applications/MAMP/htdocs/moodle30/mod
+> cp -r /path/to/tincanlaunch /Applications/MAMP/htdocs/moodle30/mod
+//now /Applications/MAMP/htdocs/moodle30/mod/tincanlaunch should exist
+//In Moodle, go to Site administration > Notifications - you should, for most plugin types, get a message saying the add-on is installed
+
+//setup plugin
+//Site administration > Plugins > Activity modules > Tin Can Launch Link - this is where the settings for this plugin are
+//This is where you configure the Credentials for your LRS - Learning Locker.  
+You can also use the public one at https://lrs.adlnet.gov/xapi/ 
+username/password
+xapi-tools/xapi-tools
+
+//Configure TinCanLaunch to use Learning Lockers credentials
+- Navigate to learning locker, login
+- Hit LRSs -> Create an LRS
+- Once complete, hit Manage Clients and not the Endpoint and credentials.  Those are exactly what you copy/paste into the Tin Can Launch configuration
+- Save your Tin Can Launch Configs
+
+- Hit Home -> Select your course from the list
+- Hit Turn Editing On (top right side)
+- Hit Add activity or resource, Select Tin Can Launch Link.
+- Name it something unique to represent your course
+- Drag your course zip file to upload and hit save
+Note: the LRS settings will default to what you configured under Tin Can Launch
+
+- Home -> select your course -> hit launch
+And your done! 
+
+- Verify your requests are being sent to Learning Locker
+- In Learning Locker hit Statements, you should see the courses statements
+- Also, use the browsers debugging tools, like in Chrome, to see if your requests are failing.
+
+
+
+
