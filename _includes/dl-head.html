@@ -16,9 +16,10 @@
    <link href="{{'/assets/css/dl-theme-style.min.css' | absolute_url }}" rel="stylesheet">
 
    <!-- custom colour override-->
-   <link href="{{'/assets/css/dl-colour-green-bright.min.css' | absolute_url }}" id="colour-scheme" rel="stylesheet">
+   <link href="{{'/assets/css/dl-colour-green-bright.min.css' | absolute_url }}" id="colour-scheme"
+      rel="stylesheet">
 
-   <link href="{{'/assets/css/dl-custom.css' | absolute_url }}" rel="stylesheet">   
+   <link href="{{'/assets/css/dl-custom.css' | absolute_url }}" rel="stylesheet">
 
    <!-- Google fonts -->
    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
@@ -27,12 +28,22 @@
    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet' type='text/css'>
    <link href='https://fonts.googleapis.com/css?family=Roboto:100,400,700' rel='stylesheet' type='text/css'>
 
-
    <!-- moved this global path here from scripts to correct site path issues  -->
    <script type="text/javascript">
    var Config = {
       PLUGINS_LOCALPATH: "{{'/assets/plugins/' | absolute_url }}"
    };
    </script>
-   
+
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-0LCSQW5H6Q"></script>
+   <script>
+   window.dataLayer = window.dataLayer || [];
+
+   function gtag() {
+      dataLayer.push(arguments);
+   }
+   gtag('js', new Date());
+   gtag('config', 'G-0LCSQW5H6Q');
+   </script>
+
 </head>
