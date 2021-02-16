@@ -4,18 +4,94 @@ title: "Unity + AWS GameLift - Integrate GameLift in Unity (Part 3)"
 date: 2020-07-26 00:08:00 -0500
 categories: devlog AWS GameLift Unity
 author: BatteryAcidDev
-description: Part 3 of this series details how to integrate with the Amazon SDKs in your Unity project to communicate with the GameLift servers.  It demonstrates that clients can join a game session and send and receive messages based on player actions.
+description: "Part 3 of this series details how to integrate with the Amazon SDKs in your Unity
+project to communicate with the GameLift servers. It demonstrates that clients can join a game
+session and send and receive messages based on player actions."
 ---
 <div class="container">
    <div class="row">
       <div class="col-12">
          <div class="media-body">
             <div class="">
-               <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/1U5A01JuDJ0" frameborder="0"
-                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+               <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/1U5A01JuDJ0"
+                  frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                   allowfullscreen></iframe>
             </div>
          </div>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-12">
+         <h2 class="mt-5">Description</h2>
+         <p class="">{{ page.description }}</p>
+         <p>You can watch <br />
+            <a href="https://youtu.be/WaAZyqgkXDY" target="_black">Part Two here</a><br />
+            <a href="https://youtu.be/hWmw3neX0hc" target="_black">Part One here</a>
+         </p>
+
+         <hr align="left" class="border-primary">
+
+         <h4>References</h4>
+         <ul class="list-unstyled">
+            <li>[Mega Frog Race Tutorial - loosely followed]<br />
+               <a href="https://aws.amazon.com/blogs/gametech/creating-servers-for-multiplayer-mobile-games-with-amazon-gamelift/"
+                  target="_blank">
+                  https://aws.amazon.com/blogs/gametech/creating-servers-for-multiplayer-mobile-games-with-amazon-gamelift/</a></li>
+
+            <li>[Mega Frog Race reference code for connecting to GameLift]<br />
+               <a href="https://github.com/aws-samples/megafrograce-gamelift-realtime-servers-sample/blob/master/MegaFrogRace/Assets/Scripts/RTSClient.cs#L253"
+                  target="_blank">
+                  https://github.com/aws-samples/megafrograce-gamelift-realtime-servers-sample/blob/master/MegaFrogRace/Assets/Scripts/RTSClient.cs#L253</a></li>
+
+            <li>[Supporting classes and scripts for this video]<br />
+               <a href="https://gist.github.com/BatteryAcid/48d3078dcec1f286a75323936cf503b0"
+                  target="_blank">
+                  https://gist.github.com/BatteryAcid/48d3078dcec1f286a75323936cf503b0</a></li>
+
+            <li>[Example RealtimeClient.cs - original source]<br />
+               <a href="https://docs.aws.amazon.com/gamelift/latest/developerguide/realtime-client.html"
+                  target="_blank">
+                  https://docs.aws.amazon.com/gamelift/latest/developerguide/realtime-client.html</a></li>
+
+            <li>[Alternative Amazon SDKs Download]<br />
+               <a href="https://aws.amazon.com/blogs/developer/referencing-the-aws-sdk-for-net-standard-2-0-from-unity-xamarin-or-uwp/"
+                  target="_blank">
+                  https://aws.amazon.com/blogs/developer/referencing-the-aws-sdk-for-net-standard-2-0-from-unity-xamarin-or-uwp/</a></li>
+
+            <li>[Realtime client API reference in Unity]<br />
+               <a href="https://docs.aws.amazon.com/gamelift/latest/developerguide/realtime-sdk-csharp-ref-actions.html"
+                  target="_blank">
+                  https://docs.aws.amazon.com/gamelift/latest/developerguide/realtime-sdk-csharp-ref-actions.html</a></li>
+
+            <li>[Realtime servers interface reference]<br />
+               <a href="https://docs.aws.amazon.com/gamelift/latest/developerguide/realtime-script-objects.html"
+                  target="_blank">
+                  https://docs.aws.amazon.com/gamelift/latest/developerguide/realtime-script-objects.html</a></li>
+
+            <li>[Realtime server callbacks reference]<br />
+               <a href="https://docs.aws.amazon.com/gamelift/latest/developerguide/realtime-script-callbacks.html"
+                  target="_blank">
+                  https://docs.aws.amazon.com/gamelift/latest/developerguide/realtime-script-callbacks.html</a></li>
+
+            <li>[Original realTimeServerScript.js from Amazon]<br />
+               <a href="https://docs.aws.amazon.com/gamelift/latest/developerguide/realtime-script.html"
+                  target="_blank">
+                  https://docs.aws.amazon.com/gamelift/latest/developerguide/realtime-script.html</a></li>
+
+            <li>[Finding a UDP port sources]<br />
+               <a href="https://stackoverflow.com/a/49408267/1956540" target="_blank">
+                  https://stackoverflow.com/a/49408267/1956540 (with a change to UDP)</a><br />
+               <a href="https://docs.microsoft.com/en-us/dotnet/framework/network-programming/how-to-create-a-socket"
+                  target="_blank">
+                  https://docs.microsoft.com/en-us/dotnet/framework/network-programming/how-to-create-a-socket</a>
+            </li>
+
+            <li>[Zenject]<br />
+               <a href="https://github.com/modesttree/Zenject" target="_blank">
+                  https://github.com/modesttree/Zenject</a></li>
+
+         </ul>
+
       </div>
    </div>
 </div>

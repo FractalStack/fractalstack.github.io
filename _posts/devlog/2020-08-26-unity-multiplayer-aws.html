@@ -4,18 +4,70 @@ title: "Unity Multiplayer with Amazon Web Services"
 date: 2020-08-26 00:08:00 -0500
 categories: devlog AWS GameLift Unity Multiplayer
 author: BatteryAcidDev
-description: This is a Unity demo of how to roll your own basic multiplayer server using AWS Lambda, API Gateway, and DynamoDb.  The example is aimed for a two player game but can be scaled up for your project’s needs.
+description: "This is a Unity demo of how to roll your own basic multiplayer server using AWS
+Lambda, API Gateway, and DynamoDb. The example is aimed for a two player game but can be scaled up
+for your project’s needs."
 ---
 <div class="container">
    <div class="row">
       <div class="col-12">
          <div class="media-body">
             <div class="">
-               <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/X45VYma6738" frameborder="0"
-                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+               <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/X45VYma6738"
+                  frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                   allowfullscreen></iframe>
             </div>
          </div>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-12">
+         <h2 class="mt-5">Description</h2>
+         <p class="">{{ page.description }}</p>
+         <p>Please note that this is NOT a production-ready implementation, but if you’re an indie
+            dev that just wants to get something up and running and not have to worry about high
+            costs, then this may be a good starting point.</p>
+
+         <p>The AWS server setup can be used against any game client, not just Unity, and also
+            probably any client networking library like Photon, but you’ll have to figure out how
+            to manage the WebSocket stuff yourself.</p>
+
+         <p>You can watch <a href="https://youtu.be/BljQ5FwQzis" target="_black">Part Two here</a>.</p>
+
+         <hr align="left" class="border-primary">
+
+         <h4>Repositories for this project</h4>
+         <p>
+            [basic-multiplayer-aws - lambda code in video]<br />
+            <a href="https://github.com/BatteryAcid/basic-multiplayer-aws" target="_blank">https://github.com/BatteryAcid/basic-multiplayer-aws</a>
+         </p>
+
+         <hr align="left" class="border-primary">
+
+         <h4>References</h4>
+         <ul class="list-unstyled">
+            <li>[Chat tutorial using AWS Lambda, API Gateway, & Dynamodb]<br />
+               <a href="https://www.freecodecamp.org/news/real-time-applications-using-websockets-with-aws-api-gateway-and-lambda-a5bb493e9452"
+                  target="_blank">https://www.freecodecamp.org/news/real-time-applications-using-websockets-with-aws-api-gateway-and-lambda-a5bb493e9452</a></li>
+
+            <li>[API Gateway costs - WebSocket APIs]<br />
+               <a href="https://aws.amazon.com/api-gateway/pricing/" target="_blank">
+                  https://aws.amazon.com/api-gateway/pricing/</a></li>
+
+            <li>[Lambda costs]<br />
+               <a href="https://aws.amazon.com/lambda/pricing/" target="_blank">
+                  https://aws.amazon.com/lambda/pricing/</a></li>
+
+            <li>[DynamoDB costs]<br />
+               <a href="https://aws.amazon.com/dynamodb/pricing/on-demand/" target="_blank">
+                  https://aws.amazon.com/dynamodb/pricing/on-demand/</a></li>
+
+            <li>[Terminate Socket from server]<br />
+               <a href="https://medium.com/@martinpham88/how-to-disconnect-a-websocket-client-from-aws-api-gateway-server-side-3c6c2abdb9dc"
+                  target="_blank">
+                  https://medium.com/@martinpham88/how-to-disconnect-a-websocket-client-from-aws-api-gateway-server-side-3c6c2abdb9dc</a></li>
+         </ul>
+
       </div>
    </div>
 </div>
