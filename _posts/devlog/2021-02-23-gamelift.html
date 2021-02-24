@@ -1,0 +1,144 @@
+---
+layout: dl-page
+permalink: /devlog/gamelift/
+title: What is GameLift and how to use it
+desc: A series of tutorials focused on the various AWS GameLift features
+
+---
+<div class="container">
+   <div class="row">
+      <div class="col-12">
+         <p class="mt-4"><a href="/devlog/"><i class="fa fa-chevron-left mb-1"></i> Back to Dev Log</a></p>
+         <h1 class="display-1 mt-5">What is GameLift?</h1>
+         <p>AWS GameLift is a service tailored to run your game’s backend servers. Before diving
+            too deep into any new service, it is important to understand your project’s
+            requirements. If you have a single player game or if you’re looking to host your game
+            client (so not the server part), GameLift is not for you.</p>
+         <p class="lead pl-2 primary-left-border">As a side note, if you’d still like to use AWS
+            Services in your project, regardless if it is multiplayer or not, you can install the
+            .NET SDKs into your project and access all of their service APIs like S3, DynamoDb,
+            Lambda, CloudWatch, etc.
+         </p>
+         <p>Some basic definitions:</p>
+         <p><strong>Game Client</strong> this is the part that the player downloads and plays the
+            game on. Most of us use Steam as a way to download the game clients when purchasing a
+            new game.</p>
+         <p><strong>Game Server</strong> this is the backend that the Game Client sends messages
+            to. It can be comprised of multiple services like authentication, matchmaking, game
+            simulation, session management, and storing data, etc. GameLift is an attempt to
+            streamline these services.
+         </p>
+         <p><a href="https://aws.amazon.com/gamelift/features/" target="_blank" class="text-teal">Official
+               feature list</a></p>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-12">
+         <h1 class="display-1 mt-6">Server types</h1>
+         <p>GameLift comes in two flavors: RealTime and Custom</p>
+      </div>
+      <div class="col-12">
+         <h2 class="mt-4">RealTime GameLift</h2>
+         <p class="mb-5">RealTime servers is the lightweight approach to GameLift. This is not the
+            option for
+            hosting your Unity backend server build, use the Custom GameLift approach instead. AWS
+            provides a <a href="https://docs.aws.amazon.com/gamelift/latest/developerguide/realtime-script.html"
+               target="_blank">basic
+               Javascript template</a> that has all the lifecycle code needed to kickoff
+            the RealTime server. It allows you to easily manage game and player sessions.
+            Basically, it provides a relay for your game clients to send and receive messages. You
+            probably won’t be using this option for a fast paced first person shooter or MMO, but
+            maybe for a small turn based game where you need to track turns and scores.<br />
+            <small class="ml-2">sources: 
+               <a class="ml-2 text-teal" href="https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-intro.html" target="_blank">https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-intro.html</a>, 
+               <a class="ml-2 text-teal" href="https://docs.aws.amazon.com/gamelift/latest/developerguide/realtime-howitworks.html" target="_blank">https://docs.aws.amazon.com/gamelift/latest/developerguide/realtime-howitworks.html</a></small>
+         </p>
+
+         <h4 class="lead mb-4">Video resources to get started</h4>
+         <ul class="list-unstyled">
+            <li class="mb-4">
+               <h5 class="mb-0 text-primary">Unity + Amazon GameLift RealTime Servers Part 1: SDK Setup</h5>
+               <span>Part 1 of this series demonstrates how to build and enable the GameLift Realtime client SDK for use in your multiplayer Unity project.  Setting up the SDK was not a trival task so if you want to get started with
+                  RealTime servers, start here.</span><br />
+               <a href="https://youtu.be/hWmw3neX0hc" class="ml-4 text-teal" target="_blank"><i class="fa fa-arrow-right fa-sm mb-1 mr-2"></i>
+                  https://youtu.be/hWmw3neX0hc</a>
+            </li>
+            <li class="mb-4">
+               <h5 class="mb-0 text-primary">Unity + Amazon GameLift RealTime Server Part 2: Setup in web console</h5>
+               <span>Part 2 of this series demonstrates how to setup Amazon's GameLift RealTime Server for basic multiplayer functionality.  We explore Amazon's web console to enable GameLift's RealTime Server, upload the basic game server script, create a fleet, and enable authentication through Cognito.</span><br />
+               <a href="https://youtu.be/WaAZyqgkXDY" class="ml-4 text-teal" target="_blank"><i class="fa fa-arrow-right fa-sm mb-1 mr-2"></i>
+                  https://youtu.be/WaAZyqgkXDY</a></li>
+            <li class="mb-4">
+               <h5 class="mb-0 text-primary">Unity + Amazon GameLift RealTime Servers Part 3: Integrate GameLift</h5>
+               <span>Part 3 of this series details how to integrate with the Amazon SDKs in your Unity project to communicate with the GameLift RealTime servers.  It demonstrates that clients can join a game session and send and receive messages based on player actions.</span><br />
+               <a href="https://youtu.be/1U5A01JuDJ0" class="ml-4 text-teal" target="_blank"><i class="fa fa-arrow-right fa-sm mb-1 mr-2"></i>
+                  https://youtu.be/1U5A01JuDJ0</a></li>
+            <li>
+               <h5 class="mb-0 text-primary">AWS GameLift: debug with server logs</h5>
+               <span>This video reviews how to debug remote GameLift servers by connecting to the instances within the Fleet and viewing the logs.</span><br />
+               <a href="https://youtu.be/8kQIG8YB4q0" class="ml-4 text-teal" target="_blank"><i class="fa fa-arrow-right fa-sm mb-1 mr-2"></i>
+                  https://youtu.be/8kQIG8YB4q0</a></li>
+         </ul>
+      </div>
+      <div class="col-12">
+         <h2 class="mt-5">Custom GameLift</h2>
+         <p class="mb-5">Custom GameLift servers is the option where you want to run a Unity
+            project (or server
+            build) as your backend server. They also support Unreal and Lumberyard, but I will be
+            referencing Unity for my tutorials as the concepts are relatively the same. There are a
+            couple things you have to setup in your project for it to be able to communicate with
+            the GameLift internal services, but I cover all of that in the videos below.</p>
+         <ul class="list-unstyled">
+            <li><h4 class="lead mb-4">Client Side Setup</h4>
+            </li>
+            <li class="mb-4">
+               <h5 class="mb-0 text-primary">AWS SDK for Unity to Connect to Custom GameLift Server</h5>
+               <span>This video shows you how to add the AWS SDK to your Unity project.  Amazon calls this SDK “Client Services”, which is used to connect to custom GameLift servers.</span><br />
+               <a href="https://youtu.be/rUAhtlD-wXg" class="ml-4 text-teal" target="_blank"><i class="fa fa-arrow-right fa-sm mb-1 mr-2"></i>
+                  https://youtu.be/rUAhtlD-wXg</a>
+            </li>
+            <li>More client side videos coming soon!</li>
+
+            <li class="mt-5"><h4 class="lead mb-4">Server Side Setup</h4>
+            </li>
+            <li class="mb-4">
+               <h5 class="mb-0 text-primary">Unity Custom GameLift Server Initialization with Fleets</h5>
+               <span>This is a review of how to initialize a Unity game server and deploy it as a Custom GameLift Server to a Fleet.</span><br />
+               <a href="https://youtu.be/IL2BRxJZdUA" class="ml-4 text-teal" target="_blank"><i class="fa fa-arrow-right fa-sm mb-1 mr-2"></i>
+                  https://youtu.be/IL2BRxJZdUA</a>
+            </li>
+            <li>More server side videos coming soon!</li>
+         </ul>
+      </div>
+
+      <div class="col-12 mb-6">
+         <h1 class="display-1 mt-6">Alternative AWS Services</h1>
+         <h2 class="">For game servers (Lambda, EC2, & Lightsail)</h2>
+         <p>
+            If you’d prefer to not use GameLift, you can leverage other AWS services like Lambda,
+            EC2, or Lightsail as your backend services. You’d have to manage everything on your own
+            including matchmaking, game/player session management, auto-scaling, server security,
+            etc.
+         </p>
+         <p>Lambda is a possible alternative for simple games that don’t require a ton of
+            processing power or complexity. <a href="https://youtube.com/playlist?list=PLOtt3_R1rR9XDEiCvX3BWP0DKm_kpZwEV"
+               target="_blank">I’ve actually created a video series on this topic with an example
+               implementation</a>. EC2 and Lightsail services will allow you to deploy basically
+            anything that runs on Linux/Unix or Windows, so as they differ in cost and
+            configuration complexity, they will probably work for whatever tech stack you’re
+            comfortable with.
+         </p>
+         <p>
+            It’s important to think about where your project is currently at and where you see it
+            going over the next several weeks or months. <a href="https://aws.amazon.com/gamelift/pricing/"
+               target="_blank">You get 125 hours of free GameLift per month</a>, but that only
+            lasts for the first year. If your game backend can run on Lambda, for example, and
+            you’re comfortable with the pricing of the other services you’ll be using (Cognito,
+            Dynamodb, S3, etc…), maybe stick with that. Maybe you don’t care about scaling, match
+            making, or session management. My point is, just because GameLift is all inclusive and
+            has “game” in its service name, doesn’t mean you have to use it. AWS offers numerous
+            services that all work together, so go with what works best for you.
+         </p>
+      </div>
+   </div>
+</div>

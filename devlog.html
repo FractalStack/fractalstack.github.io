@@ -8,15 +8,29 @@ desc: An exploration of new technologies with demonstrations on how to use them
 <section>
    <div class="container my-6" itemprop="articleBody">
       <div class="row">
-         <div class="col-md-8 col-md-offset-2">
-            {% for post in site.posts %}
+         <div class="col-12 col-lg-10">
+            <h1 class="display-2 mb-5">Featured</h1>
+            <h2>
+            <a href="{% link _posts/devlog/2021-02-23-gamelift.html %}">What is GameLift and how to
+               use it?</a>
+            </h2>
+            <p>An overview of GameLift features with tutorials</p>
+            <hr class="hr-secondary w-100 hr-md ml-0 my-5" />
+         </div>
+      </div>
+
+      <div class="row">
+         <div class="col-12 col-lg-10">
+            <h1 class="display-4 mb-5">Article Stream</h1>
+            {% assign devlogposts = site.posts | where: "categories", "devlog" %}
+            {% for post in devlogposts %}
             {% unless post.draft %}
             <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
             <p>{{ post.description }}
                <br />
                <small class="text-muted">
-                        <strong>{{ post.date | date: "%B %e, %Y" }}</strong> | {% for cat in post.categories %} {{cat}} {% endfor %}
-                     </small>
+                  <strong>{{ post.date | date: "%B %e, %Y" }}</strong> | {% for cat in post.categories %} {{cat}} {% endfor %}
+               </small>
             </p>
             {% endunless %}
             {% endfor %}
