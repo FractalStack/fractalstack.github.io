@@ -21,15 +21,28 @@ desc: A series of tutorials focused on the various AWS GameLift features
          </p>
          <p>Some basic definitions:</p>
          <p><strong>Game Client</strong> this is the part that the player downloads and plays the
-            game on. Most of us use Steam as a way to download the game clients when purchasing a
+            game on, Unity game client. Most of us use Steam as a way to download the game clients
+            when purchasing a
             new game.</p>
          <p><strong>Game Server</strong> this is the backend that the Game Client sends messages
             to. It can be comprised of multiple services like authentication, matchmaking, game
             simulation, session management, and storing data, etc. GameLift is an attempt to
             streamline these services.
          </p>
+         <p>- Unity can act as both a client and a server. See the Custom GameLift section below.</p>
+
+         <p><strong>Game Session</strong> represents an active game where we group players together
+            for a multiplayer game. We can configure how many players are allowed to play and how
+            long the game should last. Players will join an active game session to play the game.
+         </p>
+         <p><strong>Player Session</strong> represents an active player participating in a
+            multiplayer Game Session.
+         </p>
          <p><a href="https://aws.amazon.com/gamelift/features/" target="_blank" class="text-teal">Official
                feature list</a></p>
+         <p><a href="https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-howitworks.html"
+               target="_blank" class="text-teal">Official -
+               How GameLift works</a></p>
       </div>
    </div>
    <div class="row">
@@ -87,9 +100,15 @@ desc: A series of tutorials focused on the various AWS GameLift features
             build) as your backend server. They also support Unreal and Lumberyard, but I will be
             referencing Unity for my tutorials as the concepts are relatively the same. There are a
             couple things you have to setup in your project for it to be able to communicate with
-            the GameLift internal services, but I cover all of that in the videos below.</p>
+            the GameLift internal services, but I cover all of that in the videos below. The
+            biggest difference between RealTime and Custom is for custom you have to setup your own
+            communication server. I cover this in Part 3 below.<br />
+            <small class="ml-2">sources: 
+               <a class="ml-2 text-teal" href="https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-integration.html" target="_blank">https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-integration.html</a>
+            </small>
+         </p>
          <ul class="list-unstyled">
-            <li><h4 class="lead mb-4">Client Side Setup</h4>
+            <li><h4 class="lead mb-4">Part 1: Client Side Setup</h4>
             </li>
             <li class="mb-4">
                <h5 class="mb-0 text-primary">AWS SDK for Unity to Connect to Custom GameLift Server</h5>
@@ -97,9 +116,8 @@ desc: A series of tutorials focused on the various AWS GameLift features
                <a href="https://youtu.be/rUAhtlD-wXg" class="ml-4 text-teal" target="_blank"><i class="fa fa-arrow-right fa-sm mb-1 mr-2"></i>
                   https://youtu.be/rUAhtlD-wXg</a>
             </li>
-            <li>More client side videos coming soon!</li>
 
-            <li class="mt-5"><h4 class="lead mb-4">Server Side Setup</h4>
+            <li class="mt-5"><h4 class="lead mb-4">Part 2: Server Side Setup</h4>
             </li>
             <li class="mb-4">
                <h5 class="mb-0 text-primary">Unity Custom GameLift Server Initialization with Fleets</h5>
@@ -107,7 +125,15 @@ desc: A series of tutorials focused on the various AWS GameLift features
                <a href="https://youtu.be/IL2BRxJZdUA" class="ml-4 text-teal" target="_blank"><i class="fa fa-arrow-right fa-sm mb-1 mr-2"></i>
                   https://youtu.be/IL2BRxJZdUA</a>
             </li>
-            <li>More server side videos coming soon!</li>
+
+            <li class="mt-5"><h4 class="lead mb-4">Part 3: Complete Unity Client to Unity Custom GameLift Server</h4>
+            </li>
+            <li class="mb-4">
+               <h5 class="mb-0 text-primary">Unity Game Client to Unity Custom GameLift Server</h5>
+               <span>As the third part in the series, this completes the Unity Client to Unity Custom GameLift Server setup. The video covers the remaining sections in the AWS diagram starting with “Start game” (linked below). The demo is split into two projects, client and server, where I cover how to use the basic GameLift APIs and how to setup a TCP server (Telepathy) for client to server communication, along with any AWS Console configuration.</span><br />
+               <a href="https://youtu.be/cOS4Ax85elQ" class="ml-4 text-teal" target="_blank"><i class="fa fa-arrow-right fa-sm mb-1 mr-2"></i>
+                  https://youtu.be/cOS4Ax85elQ</a>
+            </li>
          </ul>
       </div>
 
