@@ -10,11 +10,20 @@ desc: An exploration of new technologies with demonstrations on how to use them
       <div class="row">
          <div class="col-12 col-lg-10">
             <h1 class="display-2 mb-5">Featured</h1>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-12 col-lg-10">
             <h2>
-            <a href="{% link _posts/devlog/2021-02-23-gamelift.html %}">What is GameLift and how to
+               <a href="{% link _posts/devlog/2021-02-23-gamelift.html %}">What is GameLift and how to
                use it?</a>
             </h2>
             <p>An overview of GameLift features with tutorials</p>
+
+            <h2>
+               <a href="{% link _posts/devlog/2021-07-07-faq.html %}">FAQs</a>
+            </h2>
+            <p>A collection of GameLift, AWS, and Unity FAQs and troubleshooting</p>
             <hr class="hr-secondary w-100 hr-md ml-0 my-5" />
 
             <p>
@@ -58,36 +67,8 @@ desc: An exploration of new technologies with demonstrations on how to use them
 
             {% endfor %}
          </div>
-
-         <!-- <ul class="tag-box inline">
-            {% assign tags_list = site.categories %}  
-              {% if tags_list.first[0] == null %}
-                {% for tag in tags_list %} 
-                  <li><a href="#{{ tag }}">{{ tag | capitalize }} <span>{{ site.tags[tag].size }}</span></a></li>
-                {% endfor %}
-              {% else %}
-                {% for tag in tags_list %} 
-                  <li><a href="#{{ tag[0] }}">{{ tag[0] | capitalize }} <span>{{ tag[1].size }}</span></a></li>
-                {% endfor %}
-              {% endif %}
-            {% assign tags_list = nil %}
-            </ul>
-
-            {% for tag in site.categories %} 
-              <h2 id="{{ tag[0] }}">{{ tag[0] | capitalize }}</h2>
-              <ul class="post-list">
-                {% assign pages_list = tag[1] %}  
-                {% for post in pages_list %}
-                  {% if post.title != null %}
-                  {% if group == null or group == post.group %}
-                  <li><a href="{{ site.url }}{{ post.url }}">{{ post.title }}<span class="entry-date"><time datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished">{{ post.date | date: "%B %d, %Y" }}</time></a></li>
-                  {% endif %}
-                  {% endif %}
-                {% endfor %}
-                {% assign pages_list = nil %}
-                {% assign group = nil %}
-              </ul>
-            {% endfor %} -->
       </div>
+
    </div>
+
 </section>
