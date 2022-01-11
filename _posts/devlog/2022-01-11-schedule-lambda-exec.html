@@ -1,0 +1,56 @@
+---
+layout: dl-post-video
+title: "Schedule second-level precision Lambda executions"
+date: 2022-01-11 00:08:00 -0500
+categories: devlog AWS Unity Multiplayer
+author: BatteryAcidDev
+description: "This is a review of how to schedule lambda function executions from your Unity game, at the second-level precision."
+---
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="media-body">
+                <div class="">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/TIsplWe7eQQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mt-5">Description</h2>
+            <p class="">{{ page.description }}</p>
+            <p>
+                The simplest way to schedule a lambda execution is through CloudWatch, or EventBridge, however this approach does not offer second-level precision. The documentation states that function executions must be made on the minute. For strategy games where players can kickoff actions, like building or upgrading bases, it may not be the best approach. If the player hits the action input in the middle of a minute, and the build task takes 1 minute to complete, you have about 30 seconds of downtime because of the minute-level precision for EventBridge scheduling.</p>
+
+            <p>One way to solve this problem is to take a different approach, which is to use the AWS State Machine service and setup a step function.  The Step Function can be scheduled based on an input value at the second-level precision.  Checkout the video above for instructions on how to do this.</p>
+
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- hor-1 -->
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5904710579836948" data-ad-slot="7169108385" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+
+            <hr align="left" class="border-primary">
+
+            <h4>Repositories for this project</h4>
+            <p>
+                [Unity Project]<br />
+                <a href="https://github.com/BatteryAcid/unity-schedule-lambda-events" target="_blank">https://github.com/BatteryAcid/unity-schedule-lambda-events</a>
+            </p>
+            <p>
+                [Demo Lambda Function]<br />
+                <a href="https://github.com/BatteryAcid/unity-schedule-lambda-events/blob/master/Assets/Lambda/index.js" target="_blank">https://github.com/BatteryAcid/unity-schedule-lambda-events/blob/master/Assets/Lambda/index.js</a>
+            </p>
+
+            <hr align="left" class="border-primary">
+
+            <h4>References</h4>
+            <ul class="list-unstyled">
+                <li>[None]</li>
+            </ul>
+
+        </div>
+    </div>
+</div>
