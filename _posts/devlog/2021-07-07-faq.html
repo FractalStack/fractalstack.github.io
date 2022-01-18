@@ -7,20 +7,76 @@ desc: A collection of GameLift, AWS, and Unity FAQs and troubleshooting
 ---
 <!-- TODO: consider making a search bar and also links in a side bar? -->
 <div class="container">
-   <div class="row">
-      <div class="col-12">
-         <p class="mt-4"><a href="/devlog/"><i class="fa fa-chevron-left mb-1"></i> Back to Dev Log</a></p>
-         <ul class="list-unstyled mt-6">
-            <li>
-               <h2 class="mb-2 text-primary">HttpErrorResponseException: Thrown from an AWS Lambda call</h2>
+    <div class="row">
+        <div class="col-12">
+            <p class="mt-4"><a href="/devlog/"><i class="fa fa-chevron-left mb-1"></i> Back to Dev Log</a></p>
+            <ul class="list-unstyled mt-6">
+                <li class="mb-4">
+                    <h2 class="mb-2 text-primary">Unauthorized or Forbidden in error messages</h2>
+                    <ul>
+                        <li>This is likely due to missing or incorrect permissions. Check all the roles and policies you have attached to your identity pool, lambda function, etc.</li>
+                        <li>Make sure the policies have the correct permission to access the resources. If you have a policy for GameLift attached to an identity pool, without any permissions for GameLift, well you probably need to add those permissions. This goes for any resources you’re trying to access.</li>
+                        <li>If you are using a User Pool, make sure your Identity Pool has the Cognito tab under Authentication providers completed with user pool id and app client id.</li>
+                        <li>If you’re allowing users access who are unauthenticated, make sure you check the “Enable access to unatuenticatded identities” in the Identity pool.</li>
+                    </ul>
+                </li>
+                <li class="mb-4">
+                    <h2 class="mb-2 text-primary">Check the region!!!</h2>
+                    <ul>
+                        <li>The most common error I see is an incorrect region somewhere in the code</li>
+                        <li>Make sure you do a search in the baseline for us-east-1, if you are NOT using us-east-1 for GameLift or whatever else you’re working on, make sure to change it to the region you’ve deployed your services to.</li>
+                    </ul>
+                </li>
+                <li class="mb-4">
+                    <h2 class="mb-2 text-primary">Ports in Gamelift fleet</h2>
+                    <ul>
+                        <li>Do you have the correct port range and protocol? Make sure you select TCP or UDP based on whatever your network solution is using.</li>
+                    </ul>
+                </li>
+                <li class="mb-4">
+                    <h2 class="mb-2 text-primary">Things specific to BatterAcidDev code</h2>
+                    <ul>
+                        <li>I use an “isProd” flag in some of my projects, when added it readies the code to be deployed to actual AWS services and NOT local testing.</li>
+                        <li>Make sure you have this flag added where applicable, noted in the videos.</li>
+                    </ul>
+                </li>
+                <li class="mb-4">
+                    <h2 class="mb-2 text-primary">Fleet Instances</h2>
+                    <ul>
+                        <li>Make sure you have at least 1 fleet instance under the “Active Instances” header on the fleet details</li>
+                        <li>You can scale the instances up or down under the Scaling tab, towards the bottom.</li>
+                        <li>Make sure to set it back to 0 when not testing, or else you will be billed!</li>
+                    </ul>
+                </li>
+                <li class="mb-4">
+                    <h2 class="mb-2 text-primary">Code configurations</h2>
+                    <ul>
+                        <li>Make sure your code has the correct fleet id</li>
+                        <li>The correct region you’re working in</li>
+                        <li>The correct identity pool id</li>
+                    </ul>
+                </li>
+                <li class="mb-4">
+                    <h2 class="mb-2 text-primary">Check your logs!</h2>
+                    <ul>
+                        <li>Make sure you are reviewing all the logs.</li>
+                        <li>GameLift session logs are available once a game session is terminated. If your game session is stuck open, tick down the desired instance count to 0 and wait for it to shutdown, then the logs will be available.</li>
+                        <li>If you are debugging an issue, make sure you place debug logs throughout your code to help you track down the issue.</li>
+                        <li>If you see logs in Unity and they seem like a wall of useless text, well, look closely, there's usually one line in there that will give us a hint at what the issue is. See the HttpErrorResponseException example below, it illustrates how one line can make the difference!</li>
+                    </ul>
+                </li>
 
-               <p>This is a general exception that I see quite a bit as it can be thrown from
-                  various AWS API calls. But for this one, I'll be focusing an example exception
-                  that's thrown when calling out to a Lambda function from your Unity project. As
-                  in the case when you're trying to connect to the Realtime GameLift server. It may
-                  look something like this: <br />
+                <li>
+                    <h2 class="mb-2 text-primary">HttpErrorResponseException: Thrown from an AWS Lambda call</h2>
 
-                  <small><pre><code>
+                    <p>This is a general exception that I see quite a bit as it can be thrown from
+                        various AWS API calls. But for this one, I'll be focusing an example exception
+                        that's thrown when calling out to a Lambda function from your Unity project. As
+                        in the case when you're trying to connect to the Realtime GameLift server. It may
+                        look something like this: <br />
+
+                        <small>
+                            <pre><code>
    HttpErrorResponseException: Exception of type 'Amazon.Runtime.Internal.HttpErrorResponseException' was thrown.
    Amazon.Runtime.HttpWebRequestMessage+<GetResponseAsync>d__20.MoveNext () 
    --- End of stack trace from previous location where exception was thrown ---
@@ -33,37 +89,35 @@ desc: A collection of GameLift, AWS, and Unity FAQs and troubleshooting
    --- End of stack trace from previous location where exception was thrown ---
    ...
                   </code></pre></small>
-               </p>
+                    </p>
 
-               <p>When you click on the error you'll see a much larger stack trace that just seems
-                  to repeat. However, if you look carefully, you'll see the real cause: the call
-                  you made from your Unity project to the Lambda function was denied.
-                  <img class="mt-3 card-img-top img-fluid" src="/assets/img/find-error-in-st.jpg"
-                     alt="AmazonLambdaException">
-               </p>
-               <h4>Resolution</h4>
-               <ul>
-                  <li>Usually that means there's something wrong with the permissions set in the
-                     role:
-                     <ul>
-                        <li>Make sure you have the correct Actions and Resource.</li>
-                        <li>Make sure the Lambda function name is the one you're trying to access.</li>
-                        <li>Double check the region.</li>
-                     </ul>
-                     <img class="mt-3 card-img-top img-fluid" src="/assets/img/httpErrorResponseException-resolution.jpg"
-                        alt="AmazonLambdaException">
-                  </li>
+                    <p>When you click on the error you'll see a much larger stack trace that just seems
+                        to repeat. However, if you look carefully, you'll see the real cause: the call
+                        you made from your Unity project to the Lambda function was denied.
+                        <img class="mt-3 card-img-top img-fluid" src="/assets/img/find-error-in-st.jpg" alt="AmazonLambdaException">
+                    </p>
+                    <h4>Resolution</h4>
+                    <ul>
+                        <li>Usually that means there's something wrong with the permissions set in the
+                            role:
+                            <ul>
+                                <li>Make sure you have the correct Actions and Resource.</li>
+                                <li>Make sure the Lambda function name is the one you're trying to access.</li>
+                                <li>Double check the region.</li>
+                            </ul>
+                            <img class="mt-3 card-img-top img-fluid" src="/assets/img/httpErrorResponseException-resolution.jpg" alt="AmazonLambdaException">
+                        </li>
 
-                  <li>If the role looks good, make sure that it's attached to the correct identity
-                     Pool.</li>
-                  <li>Check your Cognito Identity Pool configurations (select the pool, hit edit in
-                     top right) and verify the
-                     <strong>Unauthenticated role</strong> is set to the correct one.</li>
-                  <li><em>If you find something else that worked, please let me know and I'll add it!</em></li>
-               </ul>
-            </li>
-         </ul>
+                        <li>If the role looks good, make sure that it's attached to the correct identity
+                            Pool.</li>
+                        <li>Check your Cognito Identity Pool configurations (select the pool, hit edit in
+                            top right) and verify the
+                            <strong>Unauthenticated role</strong> is set to the correct one.</li>
+                        <li><em>If you find something else that worked, please let me know and I'll add it!</em></li>
+                    </ul>
+                </li>
+            </ul>
 
-      </div>
-   </div>
+        </div>
+    </div>
 </div>
